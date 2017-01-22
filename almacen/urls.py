@@ -1,4 +1,7 @@
 from django.conf.urls import url
+from api import AlmacenListAPI,AlmacenDetailAPI,TipoMovimientoListAPI,TipoMovimientoDetailAPI,PedidoListAPI,PedidoDetailAPI,\
+DetallePedidoListAPI,DetallePedidoDetailAPI,MovimientoListAPI,MovimientoDetailAPI,DetalleMovimientoListAPI,DetalleMovimientoDetailAPI,KardexListAPI,KardexDetailAPI,\
+ControlProductoAlmacenListAPI,ControlProductoAlmacenDetailAPI
 from django.contrib.auth.decorators import login_required
 from almacen.views import CrearAlmacen, CrearTipoStock, RegistrarIngresoAlmacen,RegistrarSalidaAlmacen, CrearTipoSalida, CrearDetalleSalida,\
     ReportePDFProductos, InicioOperaciones, CrearTipoMovimiento,ListadoAlmacenes,ListadoTiposUnidadMedida,\
@@ -66,4 +69,27 @@ urlpatterns = [
     url(r'^verificar_stock_para_pedido/$',login_required(VerificarStockParaPedido.as_view()), name="verificar_stock_para_pedido"),
     url(r'^listado_stock/$', login_required(ListadoStock.as_view()), name="listado_stock"),
     url(r'^listado_movimientos_pedido/(?P<pedido>.+)/$',login_required(ListadoMovimientosPorPedido.as_view()), name="listado_movimientos_pedido"),
+
+
+# Rest List-Create
+    url(r'^api/almacen/$',AlmacenListAPI.as_view(),name='almacen_list_api'),
+    url(r'^api/tipo_movimiento/$',TipoMovimientoListAPI.as_view(),name='tipo_movimiento_list_api'),
+    url(r'^api/pedido/$',PedidoListAPI.as_view(),name='pedido_list_api'),
+    url(r'^api/detalle_pedido/$',DetallePedidoListAPI.as_view(),name='detalle_pedido_list_api'),
+    url(r'^api/movimiento/$',MovimientoListAPI.as_view(),name='movimiento_list_api'),
+    url(r'^api/detalle_movimiento/$',DetalleMovimientoListAPI.as_view(),name='detalle_movimiento_list_api'),
+    url(r'^api/kardex/$',KardexListAPI.as_view(),name='kardex_list_api'),
+    url(r'^api/control_producto_almacen/$',ControlProductoAlmacenListAPI.as_view(),name='control_producto_almacen_list_api'),
+    
+
+# Rest Delete-Update
+    url(r'^api/almacen/(?P<pk>.+)$',AlmacenDetailAPI.as_view(),name='almacen_detail_api'),
+    url(r'^api/tipo_movimiento/(?P<pk>.+)$',TipoMovimientoDetailAPI.as_view(),name='tipo_movimiento_detail_api'),
+    url(r'^api/pedido/(?P<pk>.+)$',PedidoDetailAPI.as_view(),name='pedido_detail_api'),
+    url(r'^api/detalle_pedido/(?P<pk>.+)$',DetallePedidoDetailAPI.as_view(),name='detalle_pedido_detail_api'),
+    url(r'^api/movimiento/(?P<pk>.+)$',MovimientoDetailAPI.as_view(),name='movimiento_detail_api'),
+    url(r'^api/detalle_movimiento/(?P<pk>.+)$',DetalleMovimientoDetailAPI.as_view(),name='detalle_movimiento_detail_api'),
+    url(r'^api/kardex/(?P<pk>.+)$',KardexDetailAPI.as_view(),name='kardex_detail_api'),
+    url(r'^api/control_producto_almacen/(?P<pk>.+)$',ControlProductoAlmacenDetailAPI.as_view(),name='control_producto_almacen_detail_api'),
+    
 ]
