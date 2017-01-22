@@ -1,4 +1,7 @@
 from django.conf.urls import url
+from api import CuentaListAPI,ForPagoListAPI,TipoListAPI,TiDocuListAPI,TipExiListAPI,ConfiListAPI,ImpuestoListAPI,\
+ConfiListAPI,EmpresaListAPI,CuentaDetailAPI,ForPagoDetailAPI,TipoDetailAPI,TiDocuDetailAPI,TipExiDetailAPI,ConfiDetailAPI,ImpuestoDetailAPI,\
+ConfiDetailAPI,EmpresaDetailAPI
 from django.contrib.auth.decorators import login_required
 from contabilidad.views import Tablero, ListadoCuentasContables, \
     CargarCuentasContables, ListadoTiposDocumentos, CrearTipoDocumento, \
@@ -42,4 +45,23 @@ urlpatterns = [
         name="maestro_cuentas_contables_excel"),
     url(r'^maestro_tipos_documentos_excel/$', (ReporteExcelTiposDocumentos.as_view()),
         name="maestro_tipos_documentos_excel"),
+#Rest List-Create
+    url(r'^api/cuenta_contable/$',CuentaListAPI.as_view(),name='cuenta_list_api'),
+    url(r'^api/forma_pago/$',ForPagoListAPI.as_view(),name='forma_pago_list_api'),
+    url(r'^api/tipo_documento/$',TiDocuListAPI.as_view(),name='tipo_documento_list_api'),
+    url(r'^api/tipo/$',TipoListAPI.as_view(),name='tipo_list_api'),
+    url(r'^api/impuesto/$',ImpuestoListAPI.as_view(),name='impuesto_list_api'),
+    url(r'^api/empresa/$',EmpresaListAPI.as_view(),name='empresa_list_api'),
+    url(r'^api/configuracion/$',ConfiListAPI.as_view(),name='configuracion_list_api'),
+    url(r'^api/tipo_existencia/$',TipExiListAPI.as_view(),name='tipo_existencia_list_api'),
+
+#Rest Delete-Update
+     url(r'^api/cuenta_contable/(?P<pk>.+)$',CuentaDetailAPI.as_view(),name='cuenta_detail_api'),
+    url(r'^api/forma_pago/(?P<pk>.+)$',ForPagoDetailAPI.as_view(),name='forma_pago_detail_api'),
+    url(r'^api/tipo_documento/(?P<pk>.+)$',TiDocuDetailAPI.as_view(),name='tipo_documento_detail_api'),
+    url(r'^api/tipo/(?P<pk>.+)$',TipoDetailAPI.as_view(),name='tipo_detail_api'),
+    url(r'^api/impuesto/(?P<pk>.+)$',ImpuestoDetailAPI.as_view(),name='impuesto_detail_api'),
+    url(r'^api/empresa/(?P<pk>.+)$',EmpresaDetailAPI.as_view(),name='empresa_detail_api'),
+    url(r'^api/configuracion/(?P<pk>.+)$',ConfiDetailAPI.as_view(),name='configuracion_detail_api'),
+    url(r'^api/tipo_existencia/(?P<pk>.+)$',TipExiDetailAPI.as_view(),name='tipo_existencia_detail_api'),
 ]
