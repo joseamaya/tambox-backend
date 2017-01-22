@@ -23,7 +23,7 @@ class ForPagoListAPI(ListCreateAPIView):
 	queryset=FormaPago.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=ForPagoSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo'
 	ordering_fields=('name')
 
@@ -38,7 +38,7 @@ class TiDocuListAPI(ListCreateAPIView):
 	queryset=TipoDocumento.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=TiDocuSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo_sunat','nombre'
 	ordering_fields=('nombre')
 
@@ -53,7 +53,7 @@ class TipoListAPI(ListCreateAPIView):
 	queryset=Tipo.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=TipoSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo'
 	ordering_fields=('codigo')
 
@@ -66,7 +66,7 @@ class ImpuestoListAPI(ListCreateAPIView):
 	queryset=Impuesto.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=ImpuestoSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='abreviatura','descipcion'
 	ordering_fields=('abreviatura')
 
@@ -79,7 +79,7 @@ class EmpresaListAPI(ListCreateAPIView):
 	queryset=Empresa.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=EmpresaSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='razon_social','ruc'
 	ordering_fields=('razon_social')
 
@@ -92,7 +92,7 @@ class ConfiListAPI(ListCreateAPIView):
 	queryset=Configuracion.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=ConfiSerializer
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='impuesto_compra'
 	ordering_fields=('impuesto_compra')
 
@@ -105,7 +105,7 @@ class TipExiListAPI(ListCreateAPIView):
 	queryset=TipoExistencia.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=TipExiSerializer	
-
+	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo_sunat','descipcion'
 	ordering_fields=('codigo_sunat')		
 
