@@ -1,51 +1,51 @@
 from models import CuentaContable,FormaPago,TipoDocumento,Tipo,Impuesto,Empresa,Configuracion,TipoExistencia
-from serializers import ContaSerializers,ForPagoSerializer,TiDocuSerializer,TipoSerializer,ImpuestoSerializer,\
- EmpresaSerializer,ConfiSerializer,TipExiSerializer
+from serializers import CuentaContableSerializers,FormaPagoSerializer,TipoDocumentoSerializer,TipoSerializer,ImpuestoSerializer,\
+ EmpresaSerializer,ConfiguracionSerializer,TipoExistenciaSerializer
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter,OrderingFilter
 
-class CuentaListAPI(ListCreateAPIView):
+class CuentaContableListAPI(ListCreateAPIView):
 	queryset=CuentaContable.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ContaSerializers
+	serializer_class=CuentaContableSerializers
 	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='cuenta','descripcion'
 	ordering_fields=('cuenta')
 	
-class CuentaDetailAPI(RetrieveUpdateDestroyAPIView):
+class CuentaContableDetailAPI(RetrieveUpdateDestroyAPIView):
 	queryset=CuentaContable.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ContaSerializers
+	serializer_class=CuentaContableSerializers
 
 
-class ForPagoListAPI(ListCreateAPIView):
+class FormaPagoListAPI(ListCreateAPIView):
 	queryset=FormaPago.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ForPagoSerializer
+	serializer_class=FormaPagoSerializer
 	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo'
 	ordering_fields=('name')
 
-class ForPagoDetailAPI(RetrieveUpdateDestroyAPIView):
+class FormaPagoDetailAPI(RetrieveUpdateDestroyAPIView):
 	queryset=FormaPago.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ForPagoSerializer
+	serializer_class=FormaPagoSerializer
 
 
 
-class TiDocuListAPI(ListCreateAPIView):
+class TipoDocumentoListAPI(ListCreateAPIView):
 	queryset=TipoDocumento.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=TiDocuSerializer
+	serializer_class=TipoDocumentoSerializer
 	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo_sunat','nombre'
 	ordering_fields=('nombre')
 
-class TiDocuDetailAPI(RetrieveUpdateDestroyAPIView):
+class TipoDocumentoDetailAPI(RetrieveUpdateDestroyAPIView):
 	queryset=TipoDocumento.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=TiDocuSerializer	
+	serializer_class=TipoDocumentoSerializer	
 
 
 
@@ -88,28 +88,28 @@ class EmpresaDetailAPI(RetrieveUpdateDestroyAPIView):
 	permissions_class=(IsAuthenticatedOrReadOnly,)
 	serializer_class=EmpresaSerializer	
 
-class ConfiListAPI(ListCreateAPIView):
+class ConfiguracionListAPI(ListCreateAPIView):
 	queryset=Configuracion.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ConfiSerializer
+	serializer_class=ConfiguracionSerializer
 	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='impuesto_compra'
 	ordering_fields=('impuesto_compra')
 
-class ConfiDetailAPI(RetrieveUpdateDestroyAPIView):
+class ConfiguracionDetailAPI(RetrieveUpdateDestroyAPIView):
 	queryset=Configuracion.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=ConfiSerializer
+	serializer_class=ConfiguracionSerializer
 
-class TipExiListAPI(ListCreateAPIView):
+class TipoExistenciaListAPI(ListCreateAPIView):
 	queryset=TipoExistencia.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=TipExiSerializer	
+	serializer_class=TipoExistenciaSerializer	
 	filter_backends=(SearchFilter,OrderingFilter)
 	search_fields='codigo_sunat','descipcion'
 	ordering_fields=('codigo_sunat')		
 
-class TipExiDetailAPI(RetrieveUpdateDestroyAPIView):
+class TipoExistenciaDetailAPI(RetrieveUpdateDestroyAPIView):
 	queryset=TipoExistencia.objects.all()
 	permissions_class=(IsAuthenticatedOrReadOnly,)
-	serializer_class=TipExiSerializer
+	serializer_class=TipoExistenciaSerializer
