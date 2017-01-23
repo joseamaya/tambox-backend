@@ -3,9 +3,9 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.contrib.auth.models import User
 from model_utils.models import TimeStampedModel
-from administracion.querysets import NavegableQuerySet
+from simple_history.models import HistoricalRecords
+from querysets import NavegableQuerySet
 
-# Create your models here.
 class Upload(TimeStampedModel):
     archivo = models.FileField(upload_to='archivos')
 
@@ -13,8 +13,9 @@ class Profesion(TimeStampedModel):
     abreviatura = models.CharField(max_length=7)
     descripcion = models.CharField(max_length=30)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
-    
+
     def anterior(self):
         ant = Profesion.objects.anterior(self)
         return ant.pk
@@ -43,8 +44,9 @@ class Trabajador(TimeStampedModel):
     firma = models.ImageField(upload_to='firmas')
     foto = models.ImageField(upload_to='trabajadores', default='trabajadores/sinimagen.png')
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
-    
+
     def nombre_completo(self):
         if self.profesion is not None:
             return self.profesion.abreviatura+' '+self.nombres +' '+ self.apellido_paterno+' '+self.apellido_materno
@@ -83,8 +85,9 @@ class Oficina(TimeStampedModel):
     dependencia = models.ForeignKey('self',related_name='depende',null=True)
     gerencia = models.ForeignKey('self',related_name='superior',null=True)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
-    
+
     class Meta:
         permissions = (('ver_bienvenida', 'Puede ver bienvenida a la aplicación'),
                        ('cargar_oficinas', 'Puede cargar oficinas desde un archivo externo'),
@@ -113,6 +116,7 @@ class Puesto(TimeStampedModel):
     es_jefatura = models.BooleanField(default=False)
     es_asistente = models.BooleanField(default=False)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
     
     def anterior(self):
@@ -148,8 +152,9 @@ class NivelAprobacion(TimeStampedModel):
     oficina = models.ForeignKey(Oficina)
     nivel_superior = models.ForeignKey('self',null=True)
     aprobacion = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
-    
+
     def __str__(self):
         return smart_str(self.descripcion)
     
@@ -167,11 +172,3 @@ class NivelAprobacion(TimeStampedModel):
                        ('ver_tabla_niveles_aprobacion', 'Puede ver tabla de Puestos'),
                        ('ver_reporte_niveles_aprobacion_excel', 'Puede ver Reporte de niveles de aprobacion en excel'),)
         ordering = ['descripcion']
-    
-    def save(self, *args, **kwargs):
-        """if self.aprobacion:
-            desc = 'APROBADO' + self.oficina.nombre
-        else:
-            desc = 'DESAPROBADO' + self.oficina.nombre
-        self.descripcion = desc"""
-        super(NivelAprobacion, self).save()

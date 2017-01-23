@@ -3,20 +3,6 @@ from django.contrib.auth.models import User
 from model_mommy import mommy
 from productos.models import UnidadMedida, GrupoProductos, Producto
 
-# Create your tests here.
-"""class NewUnidadMedidaTestCase(TestCase):
-    fixtures = ['usuarios.json','unidadesmedida.json']
-    
-    def test_index(self):
-        resp = self.client.get("/")
-        self.assertEqual(resp.status_code,200)
-        
-    def test_new_unidad_medida_view(self):
-        self.client.login(username='test',password='test')
-        resp = self.client.get('/productos/crear_unidad_medida/')
-        self.assertEqual(200,resp.status_code)"""
-
-
 class UnidadMedidaTest(TestCase):
     def setUp(self):
         self.um1 = mommy.make(UnidadMedida)

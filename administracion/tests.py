@@ -1,32 +1,7 @@
 from django.test import TestCase
 from administracion.models import Profesion, Trabajador, Oficina, Puesto
-from django.core.urlresolvers import reverse
-from administracion.forms import ProfesionForm
 from model_mommy import mommy
 from datetime import date
-
-"""
- class ProfesionTest(TestCase):
-    fixtures = ['usuarios.json']
-
-    def test_listado_profesiones_view(self):
-        self.client.login(username='test',password='test')
-        p = self.crear_profesion()
-        url = reverse("administracion:maestro_profesiones")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        
-    def test_valid_form(self):
-        p = self.crear_profesion()
-        data = {'abreviatura': p.abreviatura, 'descripcion': p.descripcion}
-        form = ProfesionForm(data = data)
-        self.assertTrue(form.is_valid())
-        
-    def test_invalid_form(self):
-        p = self.crear_profesion('Dr.','')
-        data = {'abreviatura': p.abreviatura, 'descripcion': p.descripcion}
-        form = ProfesionForm(data = data)
-        self.assertFalse(form.is_valid())"""
 
 # Create your tests here.
 class ProfesionTest(TestCase):

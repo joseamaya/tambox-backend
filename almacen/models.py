@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*- 
 from django.db import models
 from django.db.models import Max
+from simple_history.models import HistoricalRecords
+
 from compras.models import OrdenCompra, DetalleOrdenCompra
 from contabilidad.models import TipoDocumento
 from django.utils.encoding import smart_str, python_2_unicode_compatible
@@ -18,6 +20,7 @@ class Almacen(TimeStampedModel):
     codigo = models.CharField(unique=True,max_length=5)
     descripcion = models.CharField(max_length=30)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     
     class Meta:
         permissions = (('ver_bienvenida', 'Puede ver bienvenida a la aplicación'),
@@ -52,6 +55,7 @@ class TipoMovimiento(TimeStampedModel):
     incrementa = models.BooleanField()
     pide_referencia = models.BooleanField(default=False)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     
     def anterior(self):
         try:
@@ -109,6 +113,7 @@ class Pedido(TimeStampedModel):
                      ('CANC', _('CANCELADO')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     
     def anterior(self):
         try:
@@ -164,6 +169,7 @@ class DetallePedido(TimeStampedModel):
                      ('CANC', _('CANCELADO')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     
     def cantidad_por_atender(self):
         resultado = self.cantidad - self.cantidad_atendida
@@ -192,6 +198,7 @@ class Movimiento(TimeStampedModel):
                      ('CANC', _('CANCELADA')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.ACT, max_length=20)
+    history = HistoricalRecords()
     
     def anterior(self):
         try:
@@ -282,7 +289,8 @@ class DetalleMovimiento(TimeStampedModel):
     detalle_pedido = models.ForeignKey(DetallePedido, null=True)
     producto = models.ForeignKey(Producto)
     cantidad = models.DecimalField(max_digits=15, decimal_places=5)
-    precio = models.DecimalField(max_digits=15, decimal_places=5)    
+    precio = models.DecimalField(max_digits=15, decimal_places=5)
+    history = HistoricalRecords()
     
     @property
     def valor(self):
@@ -360,6 +368,7 @@ class Kardex(TimeStampedModel):
     precio_total = models.DecimalField(max_digits=15, decimal_places=5)
     valor_total = models.DecimalField(max_digits=15, decimal_places=5)
     almacen = models.ForeignKey(Almacen)
+    history = HistoricalRecords()
     
     def __str__(self):
         return str(self.movimiento.id_movimiento) +'-'+ str(self.nro_detalle_movimiento) +'-' + self.producto.descripcion
@@ -374,7 +383,8 @@ class ControlProductoAlmacen(TimeStampedModel):
     producto = models.ForeignKey(Producto)
     almacen = models.ForeignKey(Almacen)
     stock = models.DecimalField(max_digits=15, decimal_places=5,default=0)
-    precio = models.DecimalField(max_digits=15, decimal_places=5,default=0) 
+    precio = models.DecimalField(max_digits=15, decimal_places=5,default=0)
+    history = HistoricalRecords()
     
     class Meta:
         unique_together = (('producto', 'almacen'),)

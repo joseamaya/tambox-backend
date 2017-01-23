@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*- 
 from django.db import models
 from model_utils.models import TimeStampedModel
+from simple_history.models import HistoricalRecords
+
 from contabilidad.models import CuentaContable, TipoExistencia
 from django.db.models import Max
 from django.utils.encoding import smart_str
@@ -11,6 +13,7 @@ class UnidadMedida(TimeStampedModel):
     codigo = models.CharField(max_length=5, unique=True)
     descripcion = models.CharField(max_length=50)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
 
     class Meta:
@@ -37,6 +40,7 @@ class GrupoProductos(TimeStampedModel):
     ctacontable = models.ForeignKey(CuentaContable)
     son_productos = models.BooleanField(default=True)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
 
     class Meta:
@@ -83,6 +87,7 @@ class Producto(TimeStampedModel):
     imagen = models.ImageField(upload_to='productos', default='productos/sinimagen.png')
     tipo_existencia = models.ForeignKey(TipoExistencia, null=True)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
 
     class Meta:

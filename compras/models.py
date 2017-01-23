@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.encoding import smart_str
 from model_utils import Choices
 from django.utils.translation import gettext as _
+from simple_history.models import HistoricalRecords
+
 from requerimientos.models import Requerimiento, DetalleRequerimiento
 from model_utils.models import TimeStampedModel, StatusModel
 from django.db.models import Max
@@ -64,6 +66,7 @@ class RepresentanteLegal(TimeStampedModel):
     documento = models.CharField(primary_key=True,max_length=11)
     nombre = models.CharField(max_length=150)
     cargo = models.CharField(max_length=50)
+    history = HistoricalRecords()
     
     class Meta:
         permissions = (('can_view', 'Can view Representante Legal'),
@@ -85,6 +88,7 @@ class Proveedor(TimeStampedModel):
     ciiu = models.CharField(max_length=250)
     fecha_alta = models.DateField()
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
     
     class Meta:
@@ -112,6 +116,7 @@ class Cotizacion(TimeStampedModel):
     observaciones = models.TextField(blank=True)
     STATUS = CHOICES_ESTADO_COTIZ
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
     
     def anterior(self):
@@ -181,7 +186,7 @@ class Cotizacion(TimeStampedModel):
     def __str__(self):
         return self.codigo
     
-class DetalleCotizacion(TimeStampedModel, StatusModel):
+class DetalleCotizacion(TimeStampedModel):
     objects = DetalleCotizacionManager()
     nro_detalle = models.IntegerField()
     cotizacion = models.ForeignKey(Cotizacion)
@@ -194,6 +199,7 @@ class DetalleCotizacion(TimeStampedModel, StatusModel):
                      ('DESC', _('DESCARTADA')),
                      ('CANC', _('CANCELADO')),)
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     
     def establecer_estado_comprado(self):
         if self.cantidad_comprada == 0:
@@ -227,6 +233,7 @@ class OrdenCompra(TimeStampedModel):
                      ('CANC', _('CANCELADA')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
     
     def anterior(self):
@@ -300,6 +307,7 @@ class DetalleOrdenCompra(TimeStampedModel):
                      ('CANC', _('CANCELADO')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     
     @property
     def valor(self):
@@ -339,6 +347,7 @@ class OrdenServicios(TimeStampedModel):
                      ('CANC', _('CANCELADA')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
         
     def anterior(self):
@@ -411,6 +420,7 @@ class DetalleOrdenServicios(TimeStampedModel):
                      ('CANC', _('CANCELADA')),
                      )
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     
     class Meta:
         permissions = (('ver_detalle_orden_servicios', 'Puede ver Detalle Orden de Servicios'),)
@@ -431,6 +441,7 @@ class ConformidadServicio(TimeStampedModel):
     total = models.DecimalField(max_digits=15, decimal_places=5)
     total_letras = models.CharField(max_length=150)
     estado = models.BooleanField(default=True)
+    history = HistoricalRecords()
     objects = NavegableQuerySet.as_manager()
     
     class Meta:
@@ -482,3 +493,4 @@ class DetalleConformidadServicio(TimeStampedModel):
     conformidad = models.ForeignKey(ConformidadServicio)
     detalle_orden_servicios = models.ForeignKey(DetalleOrdenServicios, null=True)
     cantidad = models.DecimalField(max_digits=15, decimal_places=5,default=0)
+    history = HistoricalRecords()

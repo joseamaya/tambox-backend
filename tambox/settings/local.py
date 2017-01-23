@@ -8,10 +8,10 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tambox',
-        'USER': 'oliver',
-        'PASSWORD': 'yugiho2000',
-        'HOST': 'localhost',
+        'NAME': 'tambox_dev',
+        'USER': 'tambox',
+        'PASSWORD': 's0p0rt3ccpp',
+        'HOST': '172.20.30.29',
         'PORT': '5432',
         'CHARSET': 'UTF8',
     },

@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Max
+from django.db.models import Q
 
 class NavegableQuerySet(models.query.QuerySet):
         
@@ -12,4 +14,4 @@ class NavegableQuerySet(models.query.QuerySet):
         try:        
             return self.filter(pk__gt = instancia.pk).order_by('pk')[0]
         except:
-            return self.order_by('pk').first()    
+            return self.order_by('pk').first()

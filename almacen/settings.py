@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from almacen.models import TipoMovimiento, Almacen, Kardex
-PARAMETROS = (('F', 'POR FECHA',), ('M', 'POR MES',), ('A', 'POR A�O',))
+PARAMETROS = (('F', 'POR FECHA',), ('M', 'POR MES',), ('A', 'POR AÑO',))
 
 MESES = (
     ('01', 'ENERO'),

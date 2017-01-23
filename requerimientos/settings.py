@@ -1,6 +1,6 @@
 from model_utils.choices import Choices
 from django.utils.translation import gettext as _
-from contabilidad.models import Configuracion
+from contabilidad.models import Configuracion, Empresa
 
 try:
     CONFIGURACION = Configuracion.objects.first()

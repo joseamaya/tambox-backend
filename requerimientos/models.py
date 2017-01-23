@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from model_utils.models import TimeStampedModel
+from simple_history.models import HistoricalRecords
+
 from administracion.models import Trabajador, Oficina
 from productos.models import Producto
 from requerimientos.querysets import RequerimientoQuerySet, AprobacionRequerimientoQuerySet
@@ -22,6 +24,7 @@ class Requerimiento(TimeStampedModel):
     entrega_directa_solicitante = models.BooleanField(default=False)
     STATUS = CHOICES_ESTADO_REQ
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
+    history = HistoricalRecords()
     objects = RequerimientoQuerySet.as_manager()
     
     class Meta:
@@ -135,7 +138,8 @@ class DetalleRequerimiento(TimeStampedModel):
     cantidad_atendida = models.DecimalField(max_digits=15, decimal_places=5,default=0)
     STATUS = CHOICES_ESTADO_REQ
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
-    
+    history = HistoricalRecords()
+
     class Meta:
         permissions = (('can_view', 'Can view Detalle Requerimiento'),)
         ordering = ['nro_detalle']
@@ -179,6 +183,7 @@ class AprobacionRequerimiento(TimeStampedModel):
     estado = models.CharField(choices=STATUS, default=STATUS.PEND, max_length=20)
     motivo_desaprobacion = models.TextField(default='')
     fecha_recepcion = models.DateField(null=True)
+    history = HistoricalRecords()
     objects = AprobacionRequerimientoQuerySet.as_manager()
     
     class Meta:

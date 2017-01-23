@@ -7,6 +7,7 @@ from model_utils.models import TimeStampedModel
 from administracion.models import Oficina
 from contabilidad.behaviors import SingletonModel
 from contabilidad.querysets import NavegableQuerySet
+from simple_history.models import HistoricalRecords
 
 
 class CuentaContable(TimeStampedModel):
@@ -16,6 +17,7 @@ class CuentaContable(TimeStampedModel):
     divisionaria = models.BooleanField(default=False)
     estado = models.BooleanField(default=True)
     objects = NavegableQuerySet.as_manager()
+    history = HistoricalRecords()
 
     class Meta:
         permissions = (('cargar_cuentas_contables', 'Puede cargar Cuentas Contables desde un archivo externo'),
@@ -42,6 +44,7 @@ class FormaPago(TimeStampedModel):
     dias_credito = models.IntegerField()
     estado = models.BooleanField(default=True)
     objects = NavegableQuerySet.as_manager()
+    history = HistoricalRecords()
 
     class Meta:
         permissions = (('cargar_formas_pago', 'Puede cargar Formas de Pago desde un archivo externo'),
@@ -67,6 +70,7 @@ class TipoDocumento(TimeStampedModel):
     descripcion = models.CharField(max_length=100)
     estado = models.BooleanField(default=True)
     objects = NavegableQuerySet.as_manager()
+    history = HistoricalRecords()
 
     class Meta:
         permissions = (('cargar_tipos_documento', 'Puede cargar Tipos de Documento desde un archivo externo'),
@@ -93,6 +97,7 @@ class Tipo(TimeStampedModel):
     codigo = models.CharField(max_length=10)
     descripcion_valor = models.CharField(max_length=100)
     cantidad = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True)
+    history = HistoricalRecords()
 
     class Meta:
         permissions = (('ver_detalle_tipo', 'Puede ver detalle Tipo de Documento'),
@@ -116,6 +121,7 @@ class Impuesto(TimeStampedModel):
                      )
     tipo_uso = models.CharField(choices=STATUS, default=STATUS.COM, max_length=20)
     objects = NavegableQuerySet.as_manager()
+    history = HistoricalRecords()
 
     class Meta:
         permissions = (('ver_detalle_impuesto', 'Puede ver detalle Impuesto'),
@@ -150,6 +156,7 @@ class Empresa(SingletonModel):
     usuario = models.EmailField()
     password = models.CharField(max_length=20)
     usa_tls = models.BooleanField(default=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return u'%s' % self.razon_social
@@ -163,12 +170,13 @@ class Configuracion(TimeStampedModel):
     administracion = models.ForeignKey(Oficina, related_name='administracion', null=True)
     presupuesto = models.ForeignKey(Oficina, related_name='presupuesto', null=True)
     logistica = models.ForeignKey(Oficina, related_name='logistica', null=True)
-
+    history = HistoricalRecords()
 
 @python_2_unicode_compatible
 class TipoExistencia(TimeStampedModel):
     codigo_sunat = models.CharField(primary_key=True, max_length=2)
     descripcion = models.CharField(max_length=50)
+    history = HistoricalRecords()
 
     def __str__(self):
         return u'%s' % self.descripcion

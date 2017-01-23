@@ -1,7 +1,7 @@
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter,OrderingFilter
-from serializer import AlmacenSerializer,TipoMovimientoSerializer,PedidoSerializer,\
+from serializers import AlmacenSerializer,TipoMovimientoSerializer,PedidoSerializer,\
 DetallePedidoSerializer,MovimientoSerializer,DetalleMovimientoSerializer,KardexSerializer,\
 ControlProductoAlmacenSerializer
 from models import Almacen,TipoMovimiento,Pedido,DetallePedido,Movimiento,\
