@@ -1,12 +1,12 @@
 import json
 from django.contrib.auth import authenticate, login
-from rest_framework import status, views
-from rest_framework.response import Response
+from django.http import JsonResponse
+from django.views import View
+from rest_framework import status
 from authentication.serializers import UserSerializer
 
-class LoginView(views.APIView):
-
-    def post(self, request, format = None):
+class LoginView(View):
+    def post(self, request):
         data = json.loads(request.body)
         username = data.get('username', None)
         password = data.get('password', None)
@@ -16,14 +16,14 @@ class LoginView(views.APIView):
             if cuenta.is_active:
                 login(request, cuenta)
                 serialized = UserSerializer(cuenta)
-                return Response(serialized.data)
+                return JsonResponse(serialized.data)
             else:
-                return Response({
+                return JsonResponse({
                     'status': 'Desautorizado',
                     'message': 'Esta cuenta ha sido deshabilitado',
                 }, status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response({
+            return JsonResponse({
                 'status': 'Desautorizado',
                 'message': 'Usuario o Password incorrectos',
             }, status=status.HTTP_401_UNAUTHORIZED)
